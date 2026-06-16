@@ -28,7 +28,8 @@
         "required_status_checks": [
           { "context": "tests" },
           { "context": "security-scan" },
-          { "context": "Analyze (python)" }
+          { "context": "Analyze (python)" },
+          { "context": "lint" }
         ]
       }
     }

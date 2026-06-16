@@ -14,3 +14,21 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff.lint]
+# Maintainability / complexity gate — SonarQube-style "too many ..." smells that
+# CodeQL (security) and Bandit (security) do NOT catch. Enforced by the `lint`
+# job in .github/workflows/lint.yml (ruff check src).
+select = [
+    "PLR0911",  # too-many-return-statements   (~ Sonar S1142)
+    "PLR0912",  # too-many-branches
+    "PLR0913",  # too-many-arguments           (Sonar S107)
+    "PLR0915",  # too-many-statements          (~ Sonar S138)
+    "C901",     # mccabe cyclomatic complexity (~ Sonar S1541)
+]
+
+[tool.ruff.lint.pylint]
+max-args = 7  # SonarQube S107 parity (ruff default is 5)
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
