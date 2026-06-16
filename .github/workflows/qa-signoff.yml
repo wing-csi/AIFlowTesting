@@ -1,0 +1,50 @@
+name: QA Sign-off
+
+# Release-time QA governance: on a version tag, generate a Word (.docx) sign-off
+# report for the branch under release (newest testcases/<branch> folder) bundling
+# its logged test cases with a fresh regression run, and publish it as an artifact.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  qa-signoff:
+    name: qa-signoff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -e . pytest pytest-cov python-docx
+      - name: Capture regression results
+        # A failing suite must still yield an honest doc that records the failure,
+        # so do not fail the job here — the generator reads the captured results.
+        continue-on-error: true
+        run: >
+          python -m pytest
+          --junitxml=qa-build/pytest-report.xml
+          --cov=src --cov-report=json:qa-build/coverage.json
+      - name: Generate QA sign-off document
+        env:
+          TAG: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+        run: >
+          python -m aiflow_demo.qa_signoff
+          --tag "$TAG"
+          --sha "$SHA"
+          --junit qa-build/pytest-report.xml
+          --coverage qa-build/coverage.json
+          --testcases-root testcases
+          --out qa-build
+      - name: Upload QA sign-off document
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-signoff-${{ github.ref_name }}
+          path: qa-build/*.docx
+          if-no-files-found: error
