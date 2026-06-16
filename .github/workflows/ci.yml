@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install test dependencies
-        run: pip install pytest
+        run: pip install pytest python-docx
       - name: Run test suite
         run: python -m pytest -v
 
@@ -28,6 +28,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install test dependencies
-        run: pip install pytest pytest-cov
+        run: pip install pytest pytest-cov python-docx
       - name: Test suite with 80% coverage gate
         run: python -m pytest --cov=src --cov-report=term-missing --cov-fail-under=80

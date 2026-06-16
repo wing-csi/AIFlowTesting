@@ -1,0 +1,40 @@
+name: QA Test Cases
+
+# On a release tag, ask Claude to generate a manual QA test-case document
+# (user stories + Positive/Negative/Boundary/Permission cases + sign-off) from
+# the codebase, and publish it as a downloadable artifact for the QA team.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  qa-testcases:
+    name: qa-testcases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -e ".[qa-testcases]"
+      - name: Generate QA test-case document
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TAG: ${{ github.ref_name }}
+        run: >
+          python -m aiflow_demo.qa_testcases
+          --project AIFlowTesting
+          --branch "$TAG"
+          --src-root src
+          --out qa
+      - name: Upload QA test-case document
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-testcases-${{ github.ref_name }}
+          path: qa/*.docx
+          if-no-files-found: error
