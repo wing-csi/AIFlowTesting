@@ -184,3 +184,20 @@ docs/superpowers/specs/2026-06-16-qa-signoff-doc-design.md (this spec)
 - **Generator under `src/aiflow_demo/`** (covered by gates) rather than a separate `tools/`.
 - **Branch base:** `feature/qa-signoff-doc` cut from `feature/multiple-discounts` (main lacks the
   suite + testcases the action documents).
+
+## Addendum — 2026-06-16 (during implementation)
+
+While the generator package was being built, branch `feature/qa-signoff-doc` was reconciled to
+`main` by an external git operation: the order-builder demo (`orders.py` + `tests/test_orders.py`)
+and the stacked-discount changes to `cart.py` were removed "to match main", and `main` was merged
+in. Consequences:
+
+- The branch is now cleanly based on `main` — a better PR base than the §12 note assumed.
+- `orders.py` no longer exists here, so its intentional `PLR0913` is gone: **`ruff check src` now
+  reports 0 findings**, not 1. The "sole finding" wording in §9/§12 and the plan is superseded — the
+  new `qa_signoff` code still adds **zero** findings, which is what the gate actually enforces.
+- `cart.py` is back to baseline (percentage discount codes only); the suite is 26 baseline cart
+  tests + 85 new `qa_signoff` tests = **111**, green.
+
+The generator design itself is unaffected — it reads whatever `testcases/<branch>/` folders exist at
+the tagged commit.
