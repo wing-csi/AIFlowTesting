@@ -14,3 +14,31 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff.lint]
+# Maintainability + reliability gate — SonarQube-style bug & smell rules that
+# CodeQL (security) and Bandit (security) do NOT catch. Enforced by the `lint`
+# job in .github/workflows/lint.yml (ruff check src).
+select = [
+    # complexity / "too many ..." (Sonar S107 / S138 / S1541 / S1142)
+    "C901",     # mccabe cyclomatic complexity (~ Sonar S1541)
+    "PLR0911",  # too-many-return-statements   (~ Sonar S1142)
+    "PLR0912",  # too-many-branches
+    "PLR0913",  # too-many-arguments           (Sonar S107)
+    "PLR0915",  # too-many-statements          (~ Sonar S138)
+    # bugs / reliability
+    "F",        # pyflakes — undefined names, unused imports/vars
+    "B",        # flake8-bugbear — likely bugs (e.g. mutable defaults)
+    "PLE",      # pylint errors
+    # smells / readability
+    "PLW",      # pylint warnings
+    "SIM",      # flake8-simplify
+    "N",        # pep8-naming (~ Sonar S100 / S101 / S116)
+    "ERA",      # eradicate — commented-out code (~ Sonar S125)
+]
+
+[tool.ruff.lint.pylint]
+max-args = 7  # SonarQube S107 parity (ruff default is 5)
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
