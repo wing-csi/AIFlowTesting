@@ -29,7 +29,8 @@
           { "context": "tests" },
           { "context": "security-scan" },
           { "context": "Analyze (python)" },
-          { "context": "lint" }
+          { "context": "lint" },
+          { "context": "coverage" }
         ]
       }
     }
