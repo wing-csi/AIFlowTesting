@@ -55,7 +55,7 @@ def _parse_junit(
     same CI run — a trusted boundary, so stdlib ElementTree is acceptable here.
     """
     try:
-        tree = ET.parse(str(path))
+        tree = ET.parse(str(path))  # nosec B314
     except (OSError, ET.ParseError):
         return None
 
