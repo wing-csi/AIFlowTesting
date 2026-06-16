@@ -4,6 +4,11 @@ version = "0.1.0"
 description = "Sample project for demoing AI agent-team workflows and GitHub merge governance."
 requires-python = ">=3.10"
 
+[project.optional-dependencies]
+# AI test-case document generator (src/aiflow_demo/qa_testcases). Installed by the
+# qa-testcases workflow; python-docx is also needed by the CI tests/coverage jobs.
+qa-testcases = ["anthropic", "python-docx"]
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
