@@ -97,9 +97,28 @@ security check + CI before merging.
    - Have reviewer 1 approve → still blocked (1 of 2).
    - Have reviewer 2 approve + checks green → merge unlocks.
 
-4. Optional extra: push a commit containing an obvious Bandit finding (e.g.
-   `password = "hunter2"` plus `eval(user_input)`) to show `security-scan` failing and
-   blocking the merge even with 2 approvals.
+4. **Show the scan blocking a HIGH-severity issue (even with 2 approvals).** The branch
+   `feature/export-receipt` ships a deliberate command-injection vulnerability
+   (`src/aiflow_demo/receipt.py` — `subprocess` with `shell=True` on a caller-supplied path).
+
+   ```powershell
+   git checkout feature/export-receipt
+   git push -u origin feature/export-receipt
+   ```
+
+   Open the PR, then collect both reviewer approvals. The merge stays **blocked** because the
+   `security-scan` check fails: Bandit reports `B602` at **HIGH** severity and exits non-zero.
+   CodeQL (`Analyze (python)`) independently flags it as `py/command-line-injection`.
+
+   Reproduce the failing check locally (this is the exact command the CI job runs):
+
+   ```powershell
+   pip install bandit
+   python -m bandit -r src -ll   # -> B602 Severity: High; exits 1
+   ```
+
+   Talking point: approvals alone never override a required check — a HIGH security finding
+   keeps `main` protected until it's fixed.
 
 ---
 
