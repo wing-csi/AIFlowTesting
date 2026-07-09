@@ -32,7 +32,7 @@ with the ruleset applied.
 ## Demo 1 — Agent-team workflow with test case logging
 
 **Goal:** show Claude Code executing a whole feature through the orchestrated flow defined in
-[CLAUDE.md](CLAUDE.md): plan → approval checkpoint → TDD → code review → security review →
+[AGENTS.md](AGENTS.md): plan → approval checkpoint → TDD → code review → security review →
 local commit, with test cases logged per branch.
 
 1. Start Claude Code in this repo and give it a feature request, for example:
