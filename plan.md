@@ -15,30 +15,26 @@ Findings below were verified against the files on `main` as of the review date.
 | 🟠 Nearly due | Target date within 7 days (by 2026-08-04) |
 | 🟢 On schedule | Target date beyond 7 days; not yet at risk |
 
-## Summary
-
-| Status | Count | Issues |
-|--------|-------|--------|
-| 🔴 Overdue | 4 | P-01, P-02, P-03, P-04 |
-| 🟠 Nearly due | 3 | P-05, P-06, P-07 |
-| 🟢 On schedule | 4 | P-08, P-09, P-10, P-11 |
-| **Total** | **11** | |
-
 ## Issue board
 
-| ID | Issue | Severity | Area | Owner | Target | Status |
-|----|-------|----------|------|-------|--------|--------|
-| P-01 | Test-case logs on `main` document code that does not exist on `main` | High | testcases | unassigned | 2026-07-10 | 🔴 Overdue |
-| P-02 | `lint` required check passes vacuously — its only intended finding is gone | High | CI | unassigned | 2026-07-17 | 🔴 Overdue |
-| P-03 | README/DEMO list 3 required checks; the ruleset requires 5 | Medium | docs | unassigned | 2026-07-22 | 🔴 Overdue |
-| P-04 | `ruff check src` never lints `tests/` (9 test files unlinted) | Medium | CI | unassigned | 2026-07-24 | 🔴 Overdue |
-| P-05 | DEMO.md step 3 promises a "$50 discount cap" that `cart.py` does not implement | Medium | docs | unassigned | 2026-07-30 | 🟠 Nearly due |
-| P-06 | `_fill_table_row` uses `zip(strict=False)` — silently truncates sign-off tables | Medium | qa_signoff | unassigned | 2026-07-31 | 🟠 Nearly due |
-| P-07 | `select_latest_testcase_dir` raises raw `FileNotFoundError` instead of `DiscoveryError` | Medium | qa_signoff | unassigned | 2026-08-03 | 🟠 Nearly due |
-| P-08 | CI installs unpinned deps instead of the declared `pyproject.toml` extra | Medium | CI | unassigned | 2026-08-14 | 🟢 On schedule |
-| P-09 | Money handled as binary `float` throughout `cart.py` | Medium | src | unassigned | 2026-08-21 | 🟢 On schedule |
-| P-10 | `qa-signoff` job can reach the generator step with no JUnit report | Low | CI | unassigned | 2026-09-04 | 🟢 On schedule |
-| P-11 | GitHub Actions pinned to floating major tags; no Dependabot | Low | supply chain | unassigned | 2026-09-18 | 🟢 On schedule |
+This checklist is the single source of truth for status — tick a box when the fix lands.
+The inline markers are machine-read by the metrics dashboard, so keep the format:
+`#bug` marks the item a defect, `!P1`/`!P2`/`!P3` = High/Medium/Low severity, and
+`due:YYYY-MM-DD` is the target date. The detail section for each ID follows below.
+
+- [ ] P-01 · testcases · Test-case logs on `main` document code that does not exist on `main` #bug !P1 due:2026-07-10
+- [ ] P-02 · CI · `lint` required check passes vacuously — its only intended finding is gone #bug !P1 due:2026-07-17
+- [ ] P-03 · docs · README/DEMO list 3 required checks; the ruleset requires 5 #bug !P2 due:2026-07-22
+- [ ] P-04 · CI · `ruff check src` never lints `tests/` (9 test files unlinted) #bug !P2 due:2026-07-24
+- [ ] P-05 · docs · DEMO.md step 3 promises a "$50 discount cap" that `cart.py` does not implement #bug !P2 due:2026-07-30
+- [ ] P-06 · qa_signoff · `_fill_table_row` uses `zip(strict=False)` — silently truncates sign-off tables #bug !P2 due:2026-07-31
+- [ ] P-07 · qa_signoff · `select_latest_testcase_dir` raises raw `FileNotFoundError` instead of `DiscoveryError` #bug !P2 due:2026-08-03
+- [ ] P-08 · CI · CI installs unpinned deps instead of the declared `pyproject.toml` extra #bug !P2 due:2026-08-14
+- [ ] P-09 · src · Money handled as binary `float` throughout `cart.py` #bug !P2 due:2026-08-21
+- [ ] P-10 · CI · `qa-signoff` job can reach the generator step with no JUnit report #bug !P3 due:2026-09-04
+- [ ] P-11 · supply chain · GitHub Actions pinned to floating major tags; no Dependabot #bug !P3 due:2026-09-18
+
+All 11 are owned by *unassigned* — assign by editing the Owner line in the detail section.
 
 ---
 
