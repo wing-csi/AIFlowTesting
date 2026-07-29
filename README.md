@@ -11,7 +11,7 @@ It demonstrates two things:
    request requiring **2 approving reviews**, a passing **CodeQL code scan**, a **security
    check** (Bandit + dependency review), and green **CI tests**.
 
-See [DEMO.md](DEMO.md) for the full demo walkthrough and [CLAUDE.md](CLAUDE.md) for the workflow
+See [DEMO.md](DEMO.md) for the full demo walkthrough and [AGENTS.md](AGENTS.md) (read by Claude Code, Codex, and other agents) for the workflow
 rules the AI follows.
 
 ## The demo app

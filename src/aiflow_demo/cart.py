@@ -68,6 +68,11 @@ class Cart:
         return Cart(items=self.items, discount_code=normalized)
 
     @property
+    def item_count(self) -> int:
+        """Total number of units across all items in the cart."""
+        return sum(item.quantity for item in self.items)
+
+    @property
     def discount_rate(self) -> float:
         """Return the discount rate for the applied code, or 0.0 if none."""
         if self.discount_code is None:

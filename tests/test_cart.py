@@ -30,6 +30,23 @@ class TestAddItem:
             Cart().add_item("Pen", 1.0, 1000)
 
 
+class TestItemCount:
+    def test_item_count_of_empty_cart_is_zero(self):
+        assert Cart().item_count == 0
+
+    def test_item_count_sums_quantities_across_items(self):
+        cart = Cart().add_item("Notebook", 25.0, 2).add_item("Pen", 1.5, 4)
+        assert cart.item_count == 6
+
+    def test_item_count_counts_single_unit_default_quantity(self):
+        assert Cart().add_item("Pen", 1.5).item_count == 1
+
+    def test_item_count_is_unchanged_on_original_after_add(self):
+        original = Cart().add_item("Notebook", 25.0, 2)
+        _ = original.add_item("Pen", 1.5, 4)
+        assert original.item_count == 2
+
+
 class TestTotal:
     def test_total_of_empty_cart_is_zero(self):
         assert Cart().total() == 0
